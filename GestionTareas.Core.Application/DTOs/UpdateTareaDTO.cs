@@ -1,6 +1,6 @@
-﻿using GestionTareas.Enum;
+﻿using GestionTareas.Core.Domain.Enum;
 
-namespace GestionTareas.DTOs
+namespace GestionTareas.Core.Application.DTOs
 {
     public class UpdateTareaDTO
     {

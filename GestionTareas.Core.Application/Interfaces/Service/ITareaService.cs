@@ -1,6 +1,5 @@
-﻿using GestionTareas.DTOs;
-using GestionTareas.Enum;
-using GestionTareas.Core.Domain.Entities;
+﻿using GestionTareas.Core.Application.DTOs;
+
 
 namespace GestionTareas.Core.Application.Interfaces.Service
 {

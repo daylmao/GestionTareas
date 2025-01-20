@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using GestionTareas.DTOs;
+using GestionTareas.Core.Application.DTOs;
 using GestionTareas.Core.Domain.Entities;
-using System;
 
 namespace GestionTareas.Mapper
 {

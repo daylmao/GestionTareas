@@ -1,4 +1,4 @@
-﻿namespace GestionTareas.Enum
+﻿namespace GestionTareas.Core.Domain.Enum
 {
     public enum Status
     {

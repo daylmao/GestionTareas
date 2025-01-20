@@ -2,7 +2,7 @@
 using GestionTareas.Core.Application.Interfaces.Repository;
 using GestionTareas.Core.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using GestionTareas.Enum;
+using GestionTareas.Core.Domain.Enum;
 
 namespace GestionTareas.Infraestructure.Persistence.Repository
 {

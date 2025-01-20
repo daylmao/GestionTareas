@@ -1,4 +1,4 @@
-﻿using GestionTareas.Enum;
+﻿using GestionTareas.Core.Domain.Enum;
 
 namespace GestionTareas.Core.Domain.Entities
 {

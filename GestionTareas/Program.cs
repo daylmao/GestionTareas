@@ -1,8 +1,9 @@
 using GestionTareas.Context;
 using GestionTareas.Mapper;
 using GestionTareas.Middleware;
-using GestionTareas.Service;
+using GestionTareas.Core.Application.Service;
 using Microsoft.EntityFrameworkCore;
+using GestionTareas.Core.Application.Interfaces.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,7 +1,7 @@
-﻿using GestionTareas.DTOs;
-using GestionTareas.Enum;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using GestionTareas.Core.Application.Interfaces.Service;
+using GestionTareas.Core.Application.DTOs;
+using GestionTareas.Core.Domain.Enum;
 
 namespace GestionTareas.Controllers
 {
