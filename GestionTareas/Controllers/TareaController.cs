@@ -1,8 +1,7 @@
 ﻿using GestionTareas.DTOs;
 using GestionTareas.Enum;
-using GestionTareas.Service;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using GestionTareas.Core.Application.Interfaces.Service;
 
 namespace GestionTareas.Controllers
 {
@@ -26,7 +25,21 @@ namespace GestionTareas.Controllers
 
         [HttpGet]
         public async Task<IEnumerable<TareaDTO>> GetAllAsync() => await _tareaService.GetAllAsync();
-            
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] int id , [FromBody] UpdateTareaDTO update)
+        {
+            if (update == null)
+            {
+                return BadRequest();
+            }
+            var UpdatedUser = await _tareaService.UpdateAsync(id,update);
+            if (UpdatedUser == null)
+            {
+                return NotFound();
+            }
+            return Ok(UpdatedUser);
+        }
 
         [HttpGet("{status}")]
         public async Task<ActionResult<IEnumerable<TareaDTO>>> FilterByStatusAsync([FromRoute] Status status)
