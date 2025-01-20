@@ -21,4 +21,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GestionTareas.Core.Application\GestionTareas.Core.Application.csproj" />
+    <ProjectReference Include="..\GestionTareas.Infraestructure.Persistence\GestionTareas.Infraestructure.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>
