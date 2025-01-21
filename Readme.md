@@ -1,5 +1,5 @@
 
-```markdown
+
 # 🚀 Arquitectura del Proyecto
 
 Este proyecto sigue una **arquitectura Onion**, que promueve la separación de responsabilidades. Esto facilita la escalabilidad, mantenimiento y prueba del sistema.
