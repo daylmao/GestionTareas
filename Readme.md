@@ -6,18 +6,6 @@ Este proyecto sigue una **arquitectura Onion**, que promueve la separación de r
 
 ---
 
-## 🖥️ API (Interfaz de Usuario)
-
-Esta capa se encarga de interactuar con los clientes. Gestiona las solicitudes HTTP, valida los datos y se comunica con la capa de aplicación para realizar las operaciones solicitadas.
-
-### Responsabilidades:
-- 🌐 Exponer los endpoints HTTP.
-- ✅ Validar los datos de entrada.
-- ⚠️ Manejar errores y proporcionar respuestas estructuradas.
-- 🔒 Gestionar la seguridad y autorización de las solicitudes.
-
----
-
 ## 💼 Capa de Aplicación (Lógica de Negocio)
 
 Aquí reside la lógica de negocio, donde los servicios gestionan las operaciones principales del sistema. Incluye la gestión de tareas y la implementación de la lógica necesaria para procesarlas.
