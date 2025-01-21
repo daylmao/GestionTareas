@@ -1,115 +1,109 @@
 
 ```markdown
-# Arquitectura del Proyecto
+# 🚀 Arquitectura del Proyecto
 
-El proyecto sigue una **arquitectura Onion**, que promueve la separación de responsabilidades a través de varias capas. Esta estructura facilita la escalabilidad, mantenimiento y prueba del sistema.
-
----
-
-## 🏢 **Capa de API (Interfaz de Usuario)**
-
-Esta capa se encarga de interactuar con los clientes. Recibe solicitudes HTTP, valida los datos y se comunica con la capa de aplicación para realizar las operaciones solicitadas.
-
-### 📌 Responsabilidades principales:
-- **Exposición de los endpoints HTTP**.
-- **Validación de datos de entrada**.
-- **Manejo de errores y respuestas estructuradas**.
-- **Seguridad y autorización**.
+Este proyecto sigue una **arquitectura Onion**, que promueve la separación de responsabilidades. Esto facilita la escalabilidad, mantenimiento y prueba del sistema.
 
 ---
 
-## 💼 **Capa de Aplicación (Lógica de Negocio)**
+## 🖥️ API (Interfaz de Usuario)
 
-Contiene la lógica de negocio y los servicios encargados de gestionar las operaciones del sistema, como la manipulación de las tareas.
+Esta capa se encarga de interactuar con los clientes. Gestiona las solicitudes HTTP, valida los datos y se comunica con la capa de aplicación para realizar las operaciones solicitadas.
 
-### 📌 Responsabilidades principales:
-- **Servicios de aplicación**: Implementación de la lógica de negocio.
-- **DTOs**: Transformación de datos entre las diferentes capas (por ejemplo, `TareaDTO`, `CreateTareaDTO`).
-- **Validación y procesamiento**: Verificación y manipulación de los datos antes de persistirlos.
-
----
-
-## 🏗️ **Capa de Dominio (Modelo del Negocio)**
-
-Define los objetos de dominio, que representan conceptos fundamentales del negocio. Esta capa es el corazón del sistema.
-
-### 📌 Responsabilidades principales:
-- **Entidades**: Modelos de datos como `Tarea`.
-- **Enumeraciones**: Valores predefinidos para estados de las tareas, como `Pendiente`, `Completado`, `EnProgreso`.
+### Responsabilidades:
+- 🌐 Exponer los endpoints HTTP.
+- ✅ Validar los datos de entrada.
+- ⚠️ Manejar errores y proporcionar respuestas estructuradas.
+- 🔒 Gestionar la seguridad y autorización de las solicitudes.
 
 ---
 
-## 💾 **Capa de Persistencia (Acceso a Datos)**
+## 💼 Capa de Aplicación (Lógica de Negocio)
 
-Gestiona la interacción con la base de datos y la persistencia de las entidades del dominio. Aquí se implementan los repositorios que permiten el acceso a los datos.
+Aquí reside la lógica de negocio, donde los servicios gestionan las operaciones principales del sistema. Incluye la gestión de tareas y la implementación de la lógica necesaria para procesarlas.
 
-### 📌 Responsabilidades principales:
-- **Repositorios**: Métodos para interactuar con la base de datos.
-- **Acceso a la base de datos**: Uso de tecnologías como ADO.NET o Entity Framework para acceder a los datos.
-
----
-
-# 📚 **Documentación de la API de Tareas**
-
-A continuación, se describen los **endpoints** disponibles para gestionar las tareas en el sistema.
+### Responsabilidades:
+- 🛠️ Implementación de los servicios de negocio.
+- 📦 Transformación de datos entre las capas utilizando DTOs (por ejemplo, `TareaDTO`, `CreateTareaDTO`).
+- 🧹 Validación y procesamiento de los datos antes de almacenarlos.
 
 ---
 
-## 1️⃣ **Crear Tarea**  
+## 🏢 Capa de Dominio (Modelo del Negocio)
+
+En esta capa se definen las entidades que representan los conceptos fundamentales del negocio. Contiene los modelos de datos del sistema y las enumeraciones (por ejemplo, los estados de las tareas).
+
+### Responsabilidades:
+- 📝 Entidades como `Tarea`, que modelan los datos del negocio.
+- 📊 Enumeraciones que definen valores preestablecidos, como los estados de las tareas: `Pendiente`, `Completado`, `EnProgreso`.
+
+---
+
+## 💾 Capa de Persistencia (Acceso a Datos)
+
+Esta capa es responsable de interactuar con la base de datos para almacenar y recuperar las entidades del dominio. Se encarga del acceso y la persistencia de los datos.
+
+### Responsabilidades:
+- 📚 Repositorios que implementan métodos para acceder a la base de datos.
+- 🏗️ Utilización de tecnologías como ADO.NET o Entity Framework para interactuar con los datos.
+
+---
+
+# 📋 Documentación de la API
+
+A continuación se presentan los endpoints disponibles para gestionar las tareas, como crear, obtener, actualizar, filtrar y eliminar tareas.
+
+---
+
+## 1. ✍️ Crear Tarea  
 **POST** `/api/tarea`  
-Crea una nueva tarea en el sistema.
+Permite crear una nueva tarea en el sistema.
 
-### 📝 **Parámetros**:
-- **Cuerpo de la solicitud**: Un objeto JSON con los detalles de la tarea.
-  ```json
-  {
-    "description": "Descripción de la tarea",
-    "dueDate": "2025-01-25",
-    "status": "Pendiente",
-    "additionalData": 1
-  }
-  ```
-  **Nota**: El campo `additionalData` representa la prioridad de la tarea:
-  - **1**: Alta prioridad.
-  - **2**: Prioridad media.
-  - **3**: Baja prioridad.
+### Parámetros:
+```json
+{
+  "description": "Descripción de la tarea",
+  "dueDate": "2025-01-25",
+  "status": "Pendiente",
+  "additionalData": 1
+}
+```
 
-### 📬 **Respuesta**:
-- **200 OK**: La tarea fue creada exitosamente.
-- **404 Not Found**: Si ocurrió un error inesperado durante la creación.
+**Nota**: El campo `additionalData` indica la prioridad de la tarea:
+- **1**: Alta prioridad 🚨.
+- **2**: Prioridad media ⚙️.
+- **3**: Baja prioridad 🐢.
+
+### Respuesta:
+- **200 OK** ✅: La tarea se creó exitosamente.
+- **404 Not Found** ❌: Hubo un error al crear la tarea.
 
 ---
 
-## 2️⃣ **Obtener Todas las Tareas**  
+## 2. 🔎 Obtener Tareas  
 **GET** `/api/tarea`  
-Recupera todas las tareas existentes en el sistema.
+Recupera todas las tareas almacenadas en el sistema.
 
-### 📬 **Respuesta**:
-- **200 OK**: Lista de todas las tareas almacenadas.
+### Respuesta:
+- **200 OK** ✅: Devuelve una lista de todas las tareas.
 
 ---
 
-## 3️⃣ **Filtrar Tareas por Estado**  
+## 3. 🔄 Filtrar Tareas  
 **GET** `/api/tarea/{status}`  
-Recupera todas las tareas filtradas por su estado.
+Recupera las tareas filtradas por su estado (puede ser `Pendiente`, `Completado`, o `EnProgreso`).
 
-### 📝 **Parámetros**:
-- **status** (enum): El estado de la tarea (puede ser `Pendiente`, `Completado`, `EnProgreso`).
-
-### 📬 **Respuesta**:
-- **200 OK**: Lista de tareas con el estado solicitado.
-- **400 Bad Request**: Si el estado proporcionado no es válido.
+### Respuesta:
+- **200 OK** ✅: Devuelve una lista de tareas con el estado solicitado.
+- **400 Bad Request** ❌: El estado proporcionado no es válido.
 
 ---
 
-## 4️⃣ **Actualizar Tarea**  
+## 4. ✏️ Actualizar Tarea  
 **PUT** `/api/tarea/{id}`  
-Actualiza una tarea existente en el sistema.
+Actualiza los detalles de una tarea existente.
 
-### 📝 **Parámetros**:
-- **id** (int): El ID de la tarea a actualizar.
-
-### 📝 **Cuerpo de la solicitud**:
+### Parámetros:
 ```json
 {
   "description": "Nueva descripción",
@@ -118,21 +112,19 @@ Actualiza una tarea existente en el sistema.
   "additionalData": 2
 }
 ```
-**Nota**: En este caso, la prioridad de la tarea se establece a 2 (prioridad media).
 
-### 📬 **Respuesta**:
-- **200 OK**: La tarea fue actualizada correctamente.
-- **404 Not Found**: Si no se encuentra la tarea con el ID proporcionado.
+**Nota**: El campo `additionalData` establece la prioridad de la tarea. En este ejemplo, la tarea tiene prioridad **2** (media).
+
+### Respuesta:
+- **200 OK** ✅: La tarea se actualizó correctamente.
+- **404 Not Found** ❌: La tarea con el ID proporcionado no fue encontrada.
 
 ---
 
-## 5️⃣ **Eliminar Tarea**  
+## 5. 🗑️ Eliminar Tarea  
 **DELETE** `/api/tarea/{id}`  
 Elimina una tarea específica por su ID.
 
-### 📝 **Parámetros**:
-- **id** (int): El ID de la tarea a eliminar.
-
-### 📬 **Respuesta**:
-- **200 OK**: La tarea fue eliminada exitosamente.
-- **404 Not Found**: Si no se encuentra la tarea con el ID proporcionado.
+### Respuesta:
+- **200 OK** ✅: La tarea fue eliminada exitosamente.
+- **404 Not Found** ❌: No se encontró la tarea con el ID proporcionado.
