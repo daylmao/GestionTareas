@@ -1,4 +1,4 @@
-﻿namespace GestionTareas.DTOs
+﻿namespace GestionTareas.Core.Application.DTOs
 {
     public class CreateTareaDTO
     {

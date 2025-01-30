@@ -1,4 +1,4 @@
-﻿using GestionTareas.Models;
+﻿using GestionTareas.Core.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestionTareas.Context

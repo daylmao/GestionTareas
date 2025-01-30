@@ -1,6 +1,6 @@
-﻿using GestionTareas.Enum;
+﻿using GestionTareas.Core.Domain.Enum;
 
-namespace GestionTareas.Models
+namespace GestionTareas.Core.Domain.Entities
 {
     public class Tarea
     {

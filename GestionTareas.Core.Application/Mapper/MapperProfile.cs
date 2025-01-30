@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using GestionTareas.DTOs;
-using GestionTareas.Enum;
-using GestionTareas.Models;
-using System;
+using GestionTareas.Core.Application.DTOs;
+using GestionTareas.Core.Domain.Entities;
 
 namespace GestionTareas.Mapper
 {
