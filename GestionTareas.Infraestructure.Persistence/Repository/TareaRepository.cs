@@ -47,5 +47,12 @@ namespace GestionTareas.Infraestructure.Persistence.Repository
         }
 
         public async Task SavechangesAsync() => await _context.SaveChangesAsync();
+
+        public bool Validate(Func<Tarea, bool> validate)
+        {
+            var found = _context.Tareas.AsEnumerable().Any(validate);
+
+            return found;
+        }
     }
 }
