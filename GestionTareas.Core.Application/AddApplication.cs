@@ -1,4 +1,5 @@
-﻿using GestionTareas.Core.Application.Interfaces.Service;
+﻿using GestionTareas.Core.Application.Factories;
+using GestionTareas.Core.Application.Interfaces.Service;
 using GestionTareas.Core.Application.Service;
 using GestionTareas.Mapper;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,9 +18,10 @@ namespace GestionTareas.Core.Application
             #region services
             services.AddScoped<ITareaService, TareaService>();
             services.AddScoped<TareaValidadorService>();
+            services.AddScoped<TareaFactory, CreateTareaFactory>();
             #endregion
 
-            
+
         }
 
     }
