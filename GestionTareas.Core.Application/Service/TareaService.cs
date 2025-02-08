@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
 using GestionTareas.Core.Application.DTOs;
+using GestionTareas.Core.Application.Factories;
 using GestionTareas.Core.Application.Interfaces.Repository;
 using GestionTareas.Core.Application.Interfaces.Service;
 using GestionTareas.Core.Domain.Entities;
 using GestionTareas.Core.Domain.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestionTareas.Core.Application.Service
 {
@@ -17,12 +13,46 @@ namespace GestionTareas.Core.Application.Service
         private readonly ITareaRepository _tareaRepository;
         private readonly IMapper _mapper;
         private readonly TareaValidadorService _tarea;
+        private readonly TareaFactory _tareaFactory;
 
-        public TareaService(ITareaRepository tareaRepository, IMapper mapper, TareaValidadorService tarea)
+        public TareaService(ITareaRepository tareaRepository, IMapper mapper, TareaValidadorService tarea, TareaFactory tareaFactory)
         {
             _tareaRepository = tareaRepository;
             _mapper = mapper;
             _tarea = tarea;
+            _tareaFactory = tareaFactory;
+        }
+
+        public async Task<Result<TareaDTO>> CreateHighPriority(string description)
+        {
+            var found = _tareaRepository.Validate(t => t.Description == description);
+
+            if (found)
+                return Result<TareaDTO>.Failure(409, "Ya existe una tarea con esa descripcion");
+
+            var tarea = _tareaFactory.CreateHighPriorityTarea(description);
+
+            await _tareaRepository.CreateAsync(tarea);
+            
+            var tareaDTO = _mapper.Map<TareaDTO>(tarea);
+
+            return Result<TareaDTO>.Success(tareaDTO, 200);
+        }
+
+        public async Task<Result<TareaDTO>> CreateLowPriority(string description)
+        {
+            var found = _tareaRepository.Validate(t => t.Description == description);
+
+            if (found)
+                return Result<TareaDTO>.Failure(409, "Ya existe una tarea con esa descripcion");
+
+            var tarea = _tareaFactory.CreateLowPriorityTarea(description);
+
+            await _tareaRepository.CreateAsync(tarea);
+
+            var tareaDTO = _mapper.Map<TareaDTO>(tarea);
+
+            return Result<TareaDTO>.Success(tareaDTO, 200);
         }
 
         public async Task<Result<IEnumerable<TareaDTO>>> GetAllAsync()
@@ -100,5 +130,6 @@ namespace GestionTareas.Core.Application.Service
             return Result<string>.Success("Tarea eliminada correctamente", 200);
 
         }
+
     }
 }
