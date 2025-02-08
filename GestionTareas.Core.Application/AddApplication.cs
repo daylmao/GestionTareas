@@ -2,11 +2,7 @@
 using GestionTareas.Core.Application.Service;
 using GestionTareas.Mapper;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace GestionTareas.Core.Application
 {
@@ -20,6 +16,7 @@ namespace GestionTareas.Core.Application
 
             #region services
             services.AddScoped<ITareaService, TareaService>();
+            services.AddScoped<TareaValidadorService>();
             #endregion
 
             

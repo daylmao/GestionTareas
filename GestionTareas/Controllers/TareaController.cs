@@ -2,6 +2,7 @@
 using GestionTareas.Core.Application.Interfaces.Service;
 using GestionTareas.Core.Application.DTOs;
 using GestionTareas.Core.Domain.Enum;
+using GestionTareas.Core.Domain.Entities;
 
 namespace GestionTareas.Controllers
 {
@@ -17,43 +18,72 @@ namespace GestionTareas.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody] CreateTareaDTO create)
+        public async Task<IActionResult> Create([FromBody] CreateTareaDTO create)
         {
-            var tarea = await _tareaService.CreateAsync(create);
-            return tarea == null? NotFound() : Ok(tarea);
+            var result = await _tareaService.CreateAsync(create);
+
+            if (!result.IsSuccess)
+
+                return StatusCode(result.StatusCode, result.Error);
+
+            return Ok(result.Data); 
         }
 
         [HttpGet]
-        public async Task<IEnumerable<TareaDTO>> GetAllAsync() => await _tareaService.GetAllAsync();
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync([FromRoute] int id , [FromBody] UpdateTareaDTO update)
+        public async Task<IActionResult> GetAllAsync()
         {
-            if (update == null)
-            {
-                return BadRequest();
-            }
-            var UpdatedUser = await _tareaService.UpdateAsync(id,update);
-            if (UpdatedUser == null)
-            {
-                return NotFound();
-            }
-            return Ok(UpdatedUser);
+            var result = await _tareaService.GetAllAsync();
+
+            if (result.IsSuccess)
+
+                return Ok(result.Data);
+
+            return BadRequest(result.Error);
         }
 
-        [HttpGet("{status}")]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var result = await _tareaService.GetByIdAsync(id);
+            if (result.IsSuccess)
+
+                return Ok(result.Data);
+
+            return NotFound(result.Error);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] int id, [FromBody] UpdateTareaDTO update)
+        {
+            var result = await _tareaService.UpdateAsync(id, update);
+            if (result.IsSuccess)
+
+                return Ok(result.Data);
+
+            return BadRequest(result.Error);
+        }
+
+        [HttpGet("status/{status}")]
         public async Task<ActionResult<IEnumerable<TareaDTO>>> FilterByStatusAsync([FromRoute] Status status)
         {
-            var filtered = await _tareaService.FilterByStatus(status);
-            return filtered == null? BadRequest() : Ok(filtered);
+            var result = await _tareaService.FilterByStatus(status);
+
+            if (result.IsSuccess)
+
+                return Ok(result.Data);
+
+            return BadRequest(result.Error);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<TareaDTO>> DeleteAsync([FromRoute] int id)
         {
-            var deleted = await _tareaService.DeleteAsync(id);
-            return deleted == null ? BadRequest(): Ok(deleted);
+            var result = await _tareaService.DeleteAsync(id);
+            if (result.IsSuccess)
+            
+                return Ok(result.Data);
 
+            return BadRequest(result.Error);
         }
     }
 }
