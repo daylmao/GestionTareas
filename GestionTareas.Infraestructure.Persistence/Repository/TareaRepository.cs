@@ -15,6 +15,8 @@ namespace GestionTareas.Infraestructure.Persistence.Repository
             _context = context;
         }
 
+        public 
+
         public async Task<IEnumerable<Tarea>> GetAllAsync() => await _context.Tareas.AsNoTracking().ToListAsync();
 
         public async Task<Tarea> GetByIdAsync(int id)
