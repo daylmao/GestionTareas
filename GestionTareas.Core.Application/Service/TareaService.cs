@@ -110,12 +110,23 @@ namespace GestionTareas.Core.Application.Service
             return Result<TareaDTO>.Success(_mapper.Map<TareaDTO>(newInfo), "200");
         }
 
+        private Dictionary<Status, IEnumerable<Tarea>> _keyValues = new();
         public async Task<Result<IEnumerable<TareaDTO>>> FilterByStatus(Status status)
         {
+            if (_keyValues.TryGetValue(status, out var cachedTareas))
+            {
+                var cachedMapped = cachedTareas.Select(b => _mapper.Map<TareaDTO>(b));
+                return Result<IEnumerable<TareaDTO>>.Success(cachedMapped, "200");
+            }
+
             var filtered = await _tareaRepository.FilterByStatus(status);
+            _keyValues[status] = filtered; 
+
             var mappedResult = filtered.Select(b => _mapper.Map<TareaDTO>(b));
             return Result<IEnumerable<TareaDTO>>.Success(mappedResult, "200");
         }
+
+
 
         public async Task<Result<TareaDTO>> UpdateAsync(int id,UpdateTareaDTO update)
         {

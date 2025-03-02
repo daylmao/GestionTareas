@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GestionTareas.Core.Application\GestionTareas.Core.Application.csproj" />
+    <ProjectReference Include="..\GestionTareas.Infraestructure.Identity\GestionTareas.Infraestructure.Identity.csproj" />
     <ProjectReference Include="..\GestionTareas.Infraestructure.Persistence\GestionTareas.Infraestructure.Persistence.csproj" />
   </ItemGroup>
 
