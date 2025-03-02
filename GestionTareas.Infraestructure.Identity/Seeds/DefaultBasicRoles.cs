@@ -15,9 +15,10 @@ namespace GestionTareas.Infraestructure.Identity.Seeds
         {
             var role = new User
             {
-                UserName = "AdminDaylight",
+                UserName = "Daylight",
                 firstName = "Dayron",
                 lastName = "Bello",
+                Email = "dayron@gmail.com",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true
             };
@@ -30,7 +31,6 @@ namespace GestionTareas.Infraestructure.Identity.Seeds
                 {
                     await userManager.CreateAsync(role, "Dayr0n!");
                     await userManager.AddToRoleAsync(role, Roles.Basic.ToString());
-                    await userManager.AddToRoleAsync(role, Roles.Admin.ToString());
 
                 }
             }

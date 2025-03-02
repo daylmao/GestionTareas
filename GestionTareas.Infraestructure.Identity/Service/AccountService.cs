@@ -22,7 +22,7 @@ namespace GestionTareas.Infraestructure.Identity.Service
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private JWTSettings _jwtSettings { get; }
+        private readonly JWTSettings _jwtSettings;
         public AccountService(UserManager<User> userManager, SignInManager<User> signInManager, IOptions<JWTSettings> jwtSettings)
         {
             _userManager = userManager;
@@ -100,30 +100,34 @@ namespace GestionTareas.Infraestructure.Identity.Service
             if (userWithSameEmail != null)
             {
                 response.HasError = true;
-                response.Error = "Email is already registered";
+                response.Error = "Email already registered";
                 return response;
             }
 
-            User admin = new()
+            User user = new()
             {
-                Email = request.Email,
-                UserName = request.Email,
+                
+                
+                UserName = request.Username,
                 firstName = request.FirstName,
                 lastName = request.LastName,
+                PhoneNumber = request.PhoneNumber,
+                Email = request.Email,
                 EmailConfirmed = true
                 
             };
 
-            var result = await _userManager.CreateAsync(admin, request.Password);
+            var result = await _userManager.CreateAsync(user, request.Password);
             if (result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(admin, roles);
+                await _userManager.AddToRoleAsync(user, roles);
             }
+
             else
             {
                 response.HasError = true;
-                response.Error = "An error occurred trying to register the user";
-                return response;
+                response.Error = "error occurred trying to register the user";
+                
             }
 
             return response;

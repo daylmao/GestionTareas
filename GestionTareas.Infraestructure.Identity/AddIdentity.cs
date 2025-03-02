@@ -40,9 +40,9 @@ namespace GestionTareas.Infraestructure.Identity
                 .AddDefaultTokenProviders();
 
 
-            #endregion
+        #endregion
 
-            #region JWT
+        #region JWT
             services.Configure<JWTSettings>(configuration.GetSection("JWTSettings"));
             services.AddAuthentication(options =>
             {

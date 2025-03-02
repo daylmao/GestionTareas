@@ -31,10 +31,11 @@ using (var scope = app.Services.CreateScope())
 		await DefaultBasicRoles.SeedAsync(userManager, rolManager);
 		await DefaultRoles.SeedAsync(userManager, rolManager);
 	}
-	catch (Exception)
+	catch (Exception )
 	{
+        
 
-	}
+    }
 }
 
 // Configure the HTTP request pipeline.
