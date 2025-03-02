@@ -20,7 +20,7 @@ namespace GestionTareas.Controllers
             _accountService = accountService;
         }
 
-        [HttpPost("register-student")]
+        [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterRequest registerRequest)
         {
             if (registerRequest == null)

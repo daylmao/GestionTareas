@@ -18,6 +18,7 @@ namespace GestionTareas.Controllers
         }
 
         [HttpPost()]
+        [Authorize(Roles = "Basic")]
         public async Task<IActionResult> CreateTarea([FromBody] CreateTareaDTO create)
         {
             var result = await _tareaService.CreateAsync(create);

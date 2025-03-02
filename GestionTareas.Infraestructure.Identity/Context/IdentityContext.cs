@@ -12,7 +12,7 @@ namespace GestionTareas.Infraestructure.Identity.Context
 {
     public class IdentityContext: IdentityDbContext<User>
     {
-        public IdentityContext(DbContextOptions<IdentityContext> options) : base(options){}
+        public IdentityContext(DbContextOptions options) : base(options){}
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
