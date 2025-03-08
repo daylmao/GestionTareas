@@ -42,7 +42,7 @@ namespace GestionTareas.Controllers
         }
 
         [HttpPost("low-priority")]
-        [Authorize(Roles = "Basic")]
+        
         public async Task<IActionResult> CreateLowPriorityTarea([FromBody] string description)
         {
             var result = await _tareaService.CreateLowPriority(description);

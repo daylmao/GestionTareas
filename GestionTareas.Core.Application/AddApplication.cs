@@ -21,6 +21,7 @@ namespace GestionTareas.Core.Application
             services.AddScoped<TareaFactory, CreateTareaFactory>();
             #endregion
 
+            services.AddSignalR();
 
         }
 
