@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using GestionTareas.Infraestructure.Identity.Entities;
 using GestionTareas.Infraestructure.Identity.Seeds;
 using GestionTareas.Infraestructure.Identity;
+using GestionTareas.Core.Application.Hub;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -50,5 +51,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<Middleware>();
 app.MapControllers();
+app.MapHub<NotificationHub>("/SendNotification");
 
 app.Run();

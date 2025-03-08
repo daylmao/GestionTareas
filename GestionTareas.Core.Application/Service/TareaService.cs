@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using GestionTareas.Core.Application.DTOs;
 using GestionTareas.Core.Application.Factories;
+using GestionTareas.Core.Application.Hub;
 using GestionTareas.Core.Application.Interfaces.Repository;
 using GestionTareas.Core.Application.Interfaces.Service;
 using GestionTareas.Core.Domain.Entities;
 using GestionTareas.Core.Domain.Enum;
+using Microsoft.AspNetCore.SignalR;
 
 namespace GestionTareas.Core.Application.Service
 {
@@ -15,13 +17,16 @@ namespace GestionTareas.Core.Application.Service
         private readonly TareaValidadorService _tarea;
         private readonly TareaFactory _tareaFactory;
         private Queue<Tarea> _cola = new Queue<Tarea>();
+        private Dictionary<Status, IEnumerable<Tarea>> _keyValues = new();
+        private readonly IHubContext<NotificationHub> _hubContext;
 
-        public TareaService(ITareaRepository tareaRepository, IMapper mapper, TareaValidadorService tarea, TareaFactory tareaFactory)
+        public TareaService(ITareaRepository tareaRepository, IMapper mapper, TareaValidadorService tarea, TareaFactory tareaFactory,  IHubContext<NotificationHub> hubContext)
         {
             _tareaRepository = tareaRepository;
             _mapper = mapper;
             _tarea = tarea;
             _tareaFactory = tareaFactory;
+            _hubContext = hubContext;
         }
 
         public async Task<Result<TareaDTO>> CreateHighPriority(string description)
@@ -41,6 +46,7 @@ namespace GestionTareas.Core.Application.Service
             _tarea.Notificar(tarea);
             
             var tareaDTO = _mapper.Map<TareaDTO>(tarea);
+            await _hubContext.Clients.All.SendAsync("SendNotification", "Tarea de alta prioridad creada exitosamente");
 
             return Result<TareaDTO>.Success(tareaDTO, "200");
         }
@@ -62,6 +68,7 @@ namespace GestionTareas.Core.Application.Service
             _tarea.Notificar(tarea);
 
             var tareaDTO = _mapper.Map<TareaDTO>(tarea);
+            await _hubContext.Clients.All.SendAsync("SendNotification", "Tarea de baja prioridad creada exitosamente");
 
             return Result<TareaDTO>.Success(tareaDTO, "200");
         }
@@ -106,11 +113,11 @@ namespace GestionTareas.Core.Application.Service
             }
             
             _tarea.Notificar(newInfo);
+            await _hubContext.Clients.All.SendAsync("SendNotification", "Tarea creada exitosamente");
 
             return Result<TareaDTO>.Success(_mapper.Map<TareaDTO>(newInfo), "200");
         }
 
-        private Dictionary<Status, IEnumerable<Tarea>> _keyValues = new();
         public async Task<Result<IEnumerable<TareaDTO>>> FilterByStatus(Status status)
         {
             if (_keyValues.TryGetValue(status, out var cachedTareas))
