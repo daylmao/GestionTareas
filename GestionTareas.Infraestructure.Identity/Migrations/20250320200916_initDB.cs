@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GestionTareas.Infraestructure.Identity.Migrations
 {
     /// <inheritdoc />
-    public partial class IdentityM : Migration
+    public partial class initDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -127,6 +127,30 @@ namespace GestionTareas.Infraestructure.Identity.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Tarea",
+                schema: "Identity",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: true),
+                    AdditionalData = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tarea", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tarea_Users_UserId",
+                        column: x => x.UserId,
+                        principalSchema: "Identity",
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserLogin",
                 schema: "Identity",
                 columns: table => new
@@ -196,6 +220,12 @@ namespace GestionTareas.Infraestructure.Identity.Migrations
                 filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Tarea_UserId",
+                schema: "Identity",
+                table: "Tarea",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserLogin_UserId",
                 schema: "Identity",
                 table: "UserLogin",
@@ -235,6 +265,10 @@ namespace GestionTareas.Infraestructure.Identity.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens",
+                schema: "Identity");
+
+            migrationBuilder.DropTable(
+                name: "Tarea",
                 schema: "Identity");
 
             migrationBuilder.DropTable(

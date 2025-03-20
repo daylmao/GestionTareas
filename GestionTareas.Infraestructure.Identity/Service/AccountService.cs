@@ -142,7 +142,7 @@ namespace GestionTareas.Infraestructure.Identity.Service
             List<Claim> rolesclaims = new List<Claim>();
             foreach (var role in roles)
             {
-                rolesclaims.Add(new Claim("roles", role));
+                rolesclaims.Add(new Claim(ClaimTypes.Role, role));
             }
             var claim = new[]
             {

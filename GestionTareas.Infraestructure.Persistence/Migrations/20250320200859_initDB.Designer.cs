@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace GestionTareas.Migrations
+namespace GestionTareas.Infraestructure.Persistence.Migrations
 {
     [DbContext(typeof(GestorTareasContext))]
-    [Migration("20250202184058_updateDateTime")]
-    partial class updateDateTime
+    [Migration("20250320200859_initDB")]
+    partial class initDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
