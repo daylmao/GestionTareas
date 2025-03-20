@@ -23,6 +23,36 @@ namespace GestionTareas.Infraestructure.Identity.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("GestionTareas.Core.Domain.Entities.Tarea", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AdditionalData")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Tarea", "Identity");
+                });
+
             modelBuilder.Entity("GestionTareas.Infraestructure.Identity.Entities.User", b =>
                 {
                     b.Property<string>("Id")
@@ -230,6 +260,13 @@ namespace GestionTareas.Infraestructure.Identity.Migrations
                     b.ToTable("AspNetUserTokens", "Identity");
                 });
 
+            modelBuilder.Entity("GestionTareas.Core.Domain.Entities.Tarea", b =>
+                {
+                    b.HasOne("GestionTareas.Infraestructure.Identity.Entities.User", null)
+                        .WithMany("Tareas")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -279,6 +316,11 @@ namespace GestionTareas.Infraestructure.Identity.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("GestionTareas.Infraestructure.Identity.Entities.User", b =>
+                {
+                    b.Navigation("Tareas");
                 });
 #pragma warning restore 612, 618
         }
